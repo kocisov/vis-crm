@@ -9,7 +9,7 @@ export default function Settings() {
     <Page loadUser={!user || !user.isLoggedIn}>
       <AsideMenu user={user} />
       <div className="p-2">
-        <div className="font-semibold">Nastavení</div>
+        <div className="font-semibold text-lg">Nastavení</div>
       </div>
     </Page>
   );

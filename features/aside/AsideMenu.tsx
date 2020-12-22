@@ -1,5 +1,11 @@
 import Link from "next/link";
-import {FiActivity, FiBox, FiInbox, FiPieChart} from "react-icons/fi";
+import {
+  FiActivity,
+  FiBox,
+  FiDatabase,
+  FiPieChart,
+  FiUserPlus,
+} from "react-icons/fi";
 import {UserProps} from "@/features/interfaces";
 import {UserBox} from "./UserBox";
 import {Divider} from "./Divider";
@@ -72,6 +78,18 @@ export function AsideMenu({user}: UserProps) {
             <a className="flex items-center space-x-1 text-lg font-medium">
               <FiPieChart />
               <span>Grafy</span>
+            </a>
+          </Link>
+          <Link href="/add-user">
+            <a className="flex items-center space-x-1 text-lg font-medium">
+              <FiUserPlus />
+              <span>Přidat uživatele</span>
+            </a>
+          </Link>
+          <Link href="/seeder">
+            <a className="flex items-center space-x-1 text-lg font-medium">
+              <FiDatabase />
+              <span>Seeder</span>
             </a>
           </Link>
         </div>

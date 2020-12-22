@@ -9,7 +9,7 @@ export default function Projects() {
     <Page loadUser={!user || !user.isLoggedIn}>
       <AsideMenu user={user} />
       <div className="p-2">
-        <div className="font-semibold">Projekty</div>
+        <div className="font-semibold text-lg">Projekty</div>
       </div>
     </Page>
   );

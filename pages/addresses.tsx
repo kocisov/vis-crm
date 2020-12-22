@@ -9,7 +9,7 @@ export default function Addresses() {
     <Page loadUser={!user || !user.isLoggedIn}>
       <AsideMenu user={user} />
       <div className="p-2">
-        <div className="font-semibold">Adresy</div>
+        <div className="font-semibold text-lg">Adresy</div>
       </div>
     </Page>
   );
