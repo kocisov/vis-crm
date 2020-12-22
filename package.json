@@ -1,0 +1,47 @@
+{
+  "name": "vis-crm",
+  "version": "0.0.1",
+  "_moduleAliases": {
+    "@/features": "./features",
+    "@/database": "./features/database"
+  },
+  "dependencies": {
+    "@visx/axis": "^1.3.0",
+    "@visx/group": "^1.0.0",
+    "@visx/scale": "^1.3.0",
+    "@visx/shape": "^1.3.0",
+    "argon2": "^0.27.1",
+    "clsx": "^1.1.1",
+    "cookie": "^0.4.1",
+    "faker": "^5.1.0",
+    "framer-motion": "^3.0.0",
+    "inflection": "^1.12.0",
+    "next": "^10.0.3",
+    "pg": "^8.5.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.1.0",
+    "swr": "^0.3.11"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.4.0",
+    "@types/faker": "^5.1.5",
+    "@types/inflection": "^1.5.28",
+    "@types/node": "^14.14.14",
+    "@types/pg": "^7.14.7",
+    "@types/react": "^17.0.0",
+    "autoprefixer": "10.1.0",
+    "module-alias": "^2.2.2",
+    "postcss": "8.2.1",
+    "tailwindcss": "^2.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "next build && next export",
+    "dev": "next",
+    "start": "next start",
+    "start:console": "ts-node --project tsconfig.console.json ./features/console/index.ts"
+  }
+}
