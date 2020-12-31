@@ -4,7 +4,6 @@ import {Project} from "@/database/models/Project";
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   try {
     const {method, cookies} = await req;
-    const {id} = await req.query;
 
     const hasAuthCookie = "CRM_USER" in cookies;
 
@@ -17,22 +16,15 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
     const cookieBody = JSON.parse(cookies.CRM_USER);
 
-    const project = <Project>await Project.find(parseInt(id.toString(), 10));
+    const projectsRaw = <Array<Project>>(
+      await Project.where({user_id: cookieBody.id})
+    );
 
-    if (
-      cookieBody.role === "Manager" ||
-      cookieBody.role === "Employee" ||
-      cookieBody.id === project.user_id
-    ) {
-      return res.status(200).json({
-        success: true,
-        data: project,
-      });
-    }
+    const projects = Array.isArray(projectsRaw) ? projectsRaw : [projectsRaw];
 
-    res.status(401).json({
-      success: false,
-      message: "You cannot access this endpoint.",
+    return res.status(200).json({
+      success: true,
+      data: projects,
     });
   } catch (e) {
     return res.status(503).json({

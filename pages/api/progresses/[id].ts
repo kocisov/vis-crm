@@ -1,4 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
+import {Progress} from "@/database/models/Progress";
 import {Project} from "@/database/models/Project";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
@@ -16,8 +17,19 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     const cookieBody = JSON.parse(cookies.CRM_USER);
+    const progresses = <Array<Progress>>(
+      await Progress.where({project_id: parseInt(id.toString(), 10)})
+    );
 
-    const project = <Project>await Project.find(parseInt(id.toString(), 10));
+    if (progresses.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: [],
+      });
+    }
+
+    const first = progresses?.[0]?.project_id;
+    const project = <Project>await Project.find(first);
 
     if (
       cookieBody.role === "Manager" ||
@@ -26,7 +38,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     ) {
       return res.status(200).json({
         success: true,
-        data: project,
+        data: progresses,
       });
     }
 

@@ -17,8 +17,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
     const cookieBody = JSON.parse(cookies.CRM_USER);
 
-    const users = <Array<User>>await User.all();
-
     if (cookieBody.role === "Manager") {
       if (method === "POST") {
         const {email, password, name, role} = body;
@@ -34,6 +32,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
           .status(200)
           .json({success: true, message: "Created new user.", result});
       }
+
+      return res
+        .status(200)
+        .json({success: false, message: "Error with creating new user."});
+    }
+
+    if (cookieBody.role === "Manager") {
+      const users = <Array<User>>await User.all();
       return res.status(200).json({success: true, data: users});
     }
 

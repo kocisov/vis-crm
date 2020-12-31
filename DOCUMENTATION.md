@@ -157,7 +157,7 @@ The code will be version controlled with Git on GitHub.
 1. K manipulaci s databází bude použit **ActiveRecord**
 2. Některé třídy (např. Připojení k databázi jako třída) budou použity jako **Singletony**
 3. Template method
-4. Iterator
+4. Builder
 
 # Architecture
 

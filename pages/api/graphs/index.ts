@@ -30,7 +30,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       message: "You cannot access this endpoint.",
     });
   } catch (e) {
-    console.log(e);
     return res.status(503).json({
       success: false,
       message: "Internal error.",

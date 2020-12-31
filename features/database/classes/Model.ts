@@ -9,7 +9,7 @@ import {
 import {Query} from "./Query";
 import {TableCache} from "./Table";
 
-export class Model {
+export abstract class Model {
   static selectedFields: Array<string> = [];
   static fetchRelations: boolean = false;
 

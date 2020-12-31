@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {Project} from "@/database/models/Project";
+import {Address} from "@/database/models/Address";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -17,26 +17,28 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     const cookieBody = JSON.parse(cookies.CRM_USER);
 
     if (method === "POST") {
-      const project = new Project();
-      project.name = body.name;
-      project.price = body.price;
-      project.deadline = body.deadline;
-      project.is_accepted = false;
-      project.is_completed = false;
-      project.is_payed = false;
-      project.user_id = cookieBody.id;
-      const result = await project.save();
+      const address = new Address();
+      address.city = body.city;
+      address.street = body.street;
+      address.postal_code = body.postal;
+      address.province = body.province;
+      address.type = body.typ;
+      address.user_id = cookieBody.id;
+      address.active = body.active;
+      const result = await address.save();
       return res.status(200).json({
         success: true,
-        message: "Created new Project.",
+        message: "Created new Address.",
         result,
       });
     }
 
-    const projects = <Array<Project>>await Project.all();
-
-    if (cookieBody.role === "Manager" || cookieBody.role === "Employee") {
-      return res.status(200).json({success: true, data: projects});
+    if (cookieBody.role === "Manager") {
+      const addresses = <Array<Address>>await Address.all();
+      return res.status(200).json({
+        success: true,
+        data: addresses,
+      });
     }
 
     res.status(401).json({
@@ -44,6 +46,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       message: "You cannot access this endpoint.",
     });
   } catch (e) {
+    console.log(e.message);
     return res.status(503).json({
       success: false,
       message: "Internal error.",

@@ -3,18 +3,18 @@ import {MonthlyAverage} from "@/features/graphs/MonthlyAverage";
 import {MonthlyCount} from "@/features/graphs/MonthlyCount";
 import {MonthlyValue} from "@/features/graphs/MonthlyValue";
 import {PaidNotPaid} from "@/features/graphs/PaidNotPaid";
-import {useGraphs} from "@/features/hooks/useGraphs";
+import {useApiRequest} from "@/features/hooks/useApiRequest";
 import {useUser} from "@/features/hooks/useUser";
 import {Page} from "@/features/page/Page";
 
 export default function Graphs() {
   const {user} = useUser({redirectTo: "/", requiredRoles: ["Manager"]});
-  const {data} = useGraphs();
+  const {data} = useApiRequest("/api/graphs");
 
   return (
     <Page loadUser={!user || !user.isLoggedIn || user.role !== "Manager"}>
       <AsideMenu user={user} />
-      <div className="p-2">
+      <div className="p-2 relative overflow-auto max-h-full">
         <div className="font-semibold text-lg">Grafy</div>
         {data?.monthly ? (
           <div className="flex items-start flex-wrap">

@@ -6,11 +6,11 @@ export function Page({
   loadUser,
 }: PropsWithChildren<{loadUser?: boolean}>) {
   return (
-    <div>
+    <>
       <Head>
         <title>CRM</title>
       </Head>
-      <div className="flex items-start">
+      <div className="flex items-start h-full">
         {loadUser ? (
           <div className="flex items-center justify-center w-full h-screen font-semibold text-xl">
             Počkejte prosím, načítáme potřebné data...
@@ -19,6 +19,6 @@ export function Page({
           children
         )}
       </div>
-    </div>
+    </>
   );
 }

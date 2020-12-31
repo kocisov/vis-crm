@@ -16,6 +16,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     const cookieBody = JSON.parse(cookies.CRM_USER);
+    const myProjects = <Array<Project>>(
+      await Project.where({user_id: cookieBody.id})
+    );
 
     if (cookieBody.role === "Manager") {
       const projects = <Array<Project>>await Project.all();
@@ -28,18 +31,24 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       return res.status(200).json({
         success: true,
         data: {
+          projects: myProjects,
           notApproved: notApproved.length,
           price,
+          myApproved: myProjects.filter((x) => x.is_accepted).length,
+          myNotApproved: myProjects.filter((x) => !x.is_accepted).length,
         },
       });
     }
 
-    res.status(401).json({
-      success: false,
-      message: "You cannot access this endpoint.",
+    res.status(200).json({
+      success: true,
+      data: {
+        projects: myProjects,
+        myApproved: myProjects.filter((x) => x.is_accepted).length,
+        myNotApproved: myProjects.filter((x) => !x.is_accepted).length,
+      },
     });
   } catch (e) {
-    console.log(e);
     return res.status(503).json({
       success: false,
       message: "Internal error.",

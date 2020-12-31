@@ -7,10 +7,21 @@ export interface Database {
 }
 
 export class Database {
-  constructor(config: PoolConfig) {
+  private static instance: Database | null = null;
+
+  private constructor(config: PoolConfig) {
     this.config = config;
-    this.pool = new Pool(config);
+    this.pool = new Pool({...config, max: 10});
     this.connected = false;
+  }
+
+  static setup(config: PoolConfig) {
+    if (Database.instance) {
+      console.log("Database already initialized.");
+      return Database.instance;
+    }
+    Database.instance = new Database(config);
+    return Database.instance;
   }
 
   async query<T>(query: string) {

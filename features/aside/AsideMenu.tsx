@@ -8,13 +8,13 @@ import {
 } from "react-icons/fi";
 import {UserProps} from "@/features/interfaces";
 import {UserBox} from "./UserBox";
-import {Divider} from "./Divider";
+import {Divider} from "../common/Divider";
 import {FaBoxes, FaCog, FaIdBadge, FaInbox} from "react-icons/fa";
 
 export function AsideMenu({user}: UserProps) {
   return (
     <div
-      className="flex flex-col h-screen bg-gray-900 text-white p-2"
+      className="flex flex-col h-full bg-gray-900 text-white p-2"
       style={{minWidth: 300}}
     >
       <div className="text-xl font-medium">CRM</div>
@@ -51,48 +51,54 @@ export function AsideMenu({user}: UserProps) {
         </Link>
       </div>
 
-      <Divider withLine />
       {user?.role === "Employee" || user?.role === "Manager" ? (
-        <div className="flex flex-col">
-          <div className="font-semibold text-gray-300">Zaměstnanecké menu</div>
-          <Link href="/progresses">
-            <a className="flex items-center space-x-1 text-lg font-medium">
-              <FaInbox />
-              <span>Postupové zprávy</span>
-            </a>
-          </Link>
-          <Link href="/employee-projects">
-            <a className="flex items-center space-x-1 text-lg font-medium">
-              <FaBoxes />
-              <span>Přidělené projekty</span>
-            </a>
-          </Link>
-        </div>
+        <>
+          <Divider withLine />
+          <div className="flex flex-col">
+            <div className="font-semibold text-gray-300">
+              Zaměstnanecké menu
+            </div>
+            <Link href="/progresses">
+              <a className="flex items-center space-x-1 text-lg font-medium">
+                <FaInbox />
+                <span>Postupové zprávy</span>
+              </a>
+            </Link>
+            <Link href="/projects-internal">
+              <a className="flex items-center space-x-1 text-lg font-medium">
+                <FaBoxes />
+                <span>Přidělené projekty</span>
+              </a>
+            </Link>
+          </div>
+        </>
       ) : null}
 
-      <Divider withLine />
       {user?.role === "Manager" ? (
-        <div className="flex flex-col">
-          <div className="font-semibold text-gray-300">Manažerské menu</div>
-          <Link href="/graphs">
-            <a className="flex items-center space-x-1 text-lg font-medium">
-              <FiPieChart />
-              <span>Grafy</span>
-            </a>
-          </Link>
-          <Link href="/add-user">
-            <a className="flex items-center space-x-1 text-lg font-medium">
-              <FiUserPlus />
-              <span>Přidat uživatele</span>
-            </a>
-          </Link>
-          <Link href="/seeder">
-            <a className="flex items-center space-x-1 text-lg font-medium">
-              <FiDatabase />
-              <span>Seeder</span>
-            </a>
-          </Link>
-        </div>
+        <>
+          <Divider withLine />
+          <div className="flex flex-col">
+            <div className="font-semibold text-gray-300">Manažerské menu</div>
+            <Link href="/graphs">
+              <a className="flex items-center space-x-1 text-lg font-medium">
+                <FiPieChart />
+                <span>Grafy</span>
+              </a>
+            </Link>
+            <Link href="/add-user">
+              <a className="flex items-center space-x-1 text-lg font-medium">
+                <FiUserPlus />
+                <span>Přidat uživatele</span>
+              </a>
+            </Link>
+            <Link href="/database">
+              <a className="flex items-center space-x-1 text-lg font-medium">
+                <FiDatabase />
+                <span>Databáze</span>
+              </a>
+            </Link>
+          </div>
+        </>
       ) : null}
     </div>
   );

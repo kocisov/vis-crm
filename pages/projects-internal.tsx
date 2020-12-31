@@ -1,26 +1,22 @@
 import Link from "next/link";
+import {Project} from "@/database/models/Project";
 import {AsideMenu} from "@/features/aside/AsideMenu";
+import {useApiRequest} from "@/features/hooks/useApiRequest";
 import {useUser} from "@/features/hooks/useUser";
 import {Page} from "@/features/page/Page";
-import {useApiRequest} from "@/features/hooks/useApiRequest";
-import {Project} from "@/database/models/Project";
 
-export default function Projects() {
-  const {user} = useUser({redirectTo: "/login"});
-  const {data: projects} = useApiRequest("/api/projects/me");
+export default function Progresses() {
+  const {user} = useUser({
+    redirectTo: "/",
+    requiredRoles: ["Manager", "Employee"],
+  });
+  const {data: projects} = useApiRequest("/api/projects");
 
   return (
     <Page loadUser={!user || !user.isLoggedIn}>
       <AsideMenu user={user} />
       <div className="p-2 overflow-auto max-h-full">
-        <div className="flex items-center space-x-2">
-          <div className="font-semibold text-lg">Moje projekty</div>
-          <Link href="/add-project">
-            <div className="bg-black text-white px-2 py-1 font-medium cursor-pointer">
-              Zadat nový projekt
-            </div>
-          </Link>
-        </div>
+        <div className="font-semibold text-lg">Přidělené projekty</div>
         {!projects ? (
           <div>Počkejte prosím, načítáme Vaše projekty.</div>
         ) : (
@@ -46,7 +42,7 @@ export default function Projects() {
                 Datum zadání
               </div>
             </div>
-            {projects?.map((project: Project, index: number) => (
+            {projects.map((project: Project, index: number) => (
               <Link href={`/projects/${project.id}`} key={project.id}>
                 <div className="flex items-center cursor-pointer border py-2 hover:border-black">
                   <div className="w-10 text-center">{index + 1}</div>

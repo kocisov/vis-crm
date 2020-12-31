@@ -7,3 +7,9 @@
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
+
+html,
+body,
+#__next {
+  height: 100%;
+}
